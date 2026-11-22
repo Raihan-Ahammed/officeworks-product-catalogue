@@ -17,6 +17,7 @@ body {
 
 .header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
@@ -33,13 +34,17 @@ body {
 .search-bar {
   display: flex;
   gap: 8px;
+  flex: 1;
+  min-width: 200px;
+  max-width: 420px;
 }
 
 .search-bar input {
+  flex: 1;
+  min-width: 0;
   padding: 8px 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
-  min-width: 220px;
 }
 
 button {

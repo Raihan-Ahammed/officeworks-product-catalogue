@@ -59,8 +59,8 @@
 
 ## Time spent
 
-AI-assisted implementation and automated verification took roughly 20-30
-minutes of active build and test time (the AI usage notes in `AI_USAGE.md`
-describe how). Reviewing every file properly and preparing for the follow-up
+AI-assisted implementation and automated verification ran from 11:41 to 11:53
+IST on 22 Nov 2026 - about 12 minutes (see `AI_USAGE.md` for how the assistant
+was used). Reviewing every file properly and preparing for the follow-up
 interview is still ahead; I will add my own review time here honestly before
 submitting.
