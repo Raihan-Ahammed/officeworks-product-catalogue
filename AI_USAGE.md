@@ -55,7 +55,7 @@ The plan I set up front:
 
 ## Time spent
 
-Recorded build window: 22 Nov 2026, 11:41-11:52 IST - about 11 minutes of
-AI-assisted implementation and automated verification, including one
-review-and-fix round. My own review and interview preparation time is still to
-be added honestly before submitting.
+Recorded timing: implementation and automated verification ran 11:41-11:52
+IST on 22 Nov 2026, and final corrections and packaging completed by 11:56
+IST - about 15 minutes of AI-assisted work in total. My own review and
+interview preparation time is still to be added honestly before submitting.
