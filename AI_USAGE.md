@@ -1,25 +1,23 @@
 # AI usage
 
-## Tools and models
+## Tools
 
-- An AI coding assistant (an LLM-based coding agent with file and shell
-  access), directed by me. I set the approach, reviewed every generated file
-  line by line, ran the tests and the smoke test, and take ownership of the
-  result.
-- No agent instruction files (`CLAUDE.md`, `AGENTS.md`, `.cursor/rules`) were
-  used; direction was given directly in the conversation.
+- An AI coding assistant (an LLM-based agent that can read and write files and
+  run shell commands), directed by me. I set the approach and constraints,
+  reviewed the output, and own every line in this submission.
 
-## Plan
+## How it was directed
 
-The plan I gave the assistant, up front:
+The plan I set up front:
 
 1. Node.js + TypeScript Express backend that proxies the Fake Store API
    behind a `ProductSource` interface with caching and validation.
 2. React + TypeScript client (Vite) covering the five acceptance criteria.
-3. Enquiry behind an `EmailProvider` interface, console provider by default.
+3. Enquiry delivery over SMTP behind an `EmailProvider` interface, with a
+   local catch-all inbox for development.
 4. Unit tests for the catalogue logic, API tests for the routes, component
    tests for the enquiry form.
-5. README + DECISIONS.md honest about assumptions and cuts.
+5. README + this file + DECISIONS.md, honest about assumptions and cuts.
 
 ## Key prompts and moments that shaped the solution
 
@@ -31,21 +29,32 @@ The plan I gave the assistant, up front:
    and the documented tie-breaking rule, rather than code that assumes every
    product has a rating.
 3. **"The reviewer must run this in under 10 minutes with no accounts."**
-   This cut real SMTP and Docker in favour of a console email provider and a
-   two-command setup.
+   This shaped the two-command setup and the local Maildev inbox instead of
+   real SMTP credentials.
 4. **"Search should also match descriptions, and category pages mirror the
-   home page's top-rated-first ordering."** Direction on the acceptance
-   criteria gaps.
+   home page's top-rated-first ordering."**
 
 ## Where the AI got something wrong, and how I caught it
 
-- **Component tests failed on first run**: the assistant's test setup did not
-  reset the DOM between tests, so label queries matched multiple rendered
-  forms. Caught by running the suite; fixed by adding cleanup to the test
-  setup file.
-- **Live smoke test was blocked by bot protection**: the Fake Store API
-  refused requests from the build environment, so the first end-to-end check
-  failed with a 403. Caught while verifying the running server; verified
-  against a local stub serving the same payload shape instead, and the
-  defensive normalisation means a changed upstream payload fails loudly
-  rather than silently.
+- **Broken product images shipped unhandled.** The first UI pass rendered
+  broken-image icons when an image URL failed. I caught this reviewing the
+  running app and added a placeholder fallback in the image components.
+- **Enquiry delivery was originally log-only.** The first version wrote the
+  "email" to the backend console, which does not meet the acceptance
+  criterion that the sales inbox receives an email. I caught this when
+  re-reading the criteria against the submission and replaced it with real
+  SMTP delivery plus a local test inbox.
+- **Test isolation bug.** The first frontend test run failed because the test
+  setup did not clean up rendered components between tests. Caught by running
+  the suite; fixed in the test setup file.
+- **Live smoke test blocked by bot protection.** The Fake Store API refused
+  requests from the build environment, so end-to-end verification ran against
+  a local stub serving the same payload shape. The defensive normalisation
+  means a changed upstream payload fails loudly rather than silently, and the
+  reviewer runs against the real API locally.
+
+## Time spent
+
+Roughly 20-30 minutes of AI-assisted implementation and automated verification
+so far (initial build plus one review-and-fix round). My own review and
+interview preparation time is still to be added honestly before submitting.

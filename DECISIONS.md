@@ -19,12 +19,15 @@
 
 ## Requirements simplified or dropped, and why
 
-- **Real email delivery** is cut to an interface (`EmailProvider`) plus a
-  console-logging default. The brief expects the email provider to change, and
-  the solution must not require paid services or accounts, so wiring real SMTP
-  would add cost and secrets without adding judgement to the review. The
-  acceptance criterion (sales inbox receives an email) is observable in the
-  backend log. Swapping in SES/SMTP is a one-file change.
+- **Email delivery is real SMTP, with a local catch-all inbox in
+  development.** The acceptance criterion says the sales inbox receives an
+  email, so delivery is genuinely sent over SMTP via an `EmailProvider`
+  interface. `npm run dev` starts Maildev (an npm package, no account, no
+  Docker) as the local sales inbox on http://localhost:1080, so the reviewer
+  sees the actual email arrive. Production swaps in SES/SMTP credentials via
+  environment variables; no code changes. A console-logging provider remains
+  as a fallback (`EMAIL_PROVIDER=console`). Storing enquiries in a database is
+  the deliberately deferred part, not the sending.
 - **No database.** Product metadata is explicitly "not important yet" and the
   upstream API is the source of truth, so the backend is a read-through cache.
   Enquiries are delivered by email, not stored. If enquiry tracking becomes a
@@ -56,10 +59,8 @@
 
 ## Time spent
 
-Roughly 2 hours inside the 2-3 hour time-box, split approximately:
-
-- Planning and directing the AI assistant (approach, structure, acceptance
-  criteria walkthrough): ~25 min
-- Building (AI-generated, reviewed line by line): ~45 min
-- Testing (unit + API tests, smoke test against a local Fake Store stub): ~30 min
-- Review and documentation (this file, README, AI_USAGE): ~20 min
+AI-assisted implementation and automated verification took roughly 20-30
+minutes of active build and test time (the AI usage notes in `AI_USAGE.md`
+describe how). Reviewing every file properly and preparing for the follow-up
+interview is still ahead; I will add my own review time here honestly before
+submitting.

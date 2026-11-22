@@ -22,7 +22,15 @@ export default function ProductPage() {
   return (
     <section className="product-page">
       <div className="product-page-image">
-        <img src={product.image} alt={product.title} />
+        <img
+          src={product.image}
+          alt={product.title}
+          onError={(e) => {
+            if (!e.currentTarget.src.endsWith('/placeholder.svg')) {
+              e.currentTarget.src = '/placeholder.svg';
+            }
+          }}
+        />
       </div>
       <div className="product-page-body">
         <p className="category-label">{product.category}</p>

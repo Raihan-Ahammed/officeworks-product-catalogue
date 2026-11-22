@@ -19,6 +19,9 @@ interfaces so they can be swapped without touching the app.
   [Fake Store API](https://fakestoreapi.com). No database: product metadata is
   explicitly out of scope, and enquiries are delivered by email rather than
   stored (see `DECISIONS.md`).
+- Enquiry email goes over SMTP behind an `EmailProvider` interface. In
+  development `npm run dev` also starts Maildev, a local catch-all inbox with
+  a web UI, so the full enquiry flow works with no accounts and no secrets.
 
 ## Getting started (under 10 minutes)
 
@@ -30,12 +33,15 @@ npm install
 npm run dev
 ```
 
-Then open http://localhost:5173 (the web app). The API runs on
-http://localhost:4000 and Vite proxies `/api` to it.
+Then open:
+
+- http://localhost:5173 - the web app (Vite proxies `/api` to the backend)
+- http://localhost:1080 - Maildev, the local sales inbox: enquiry emails land
+  here
 
 That is the whole setup. Configuration is optional: copy `.env.example` to
-`.env` to change the port, the product source URL, the cache TTL, or the sales
-inbox address.
+`.env` to change the port, the product source URL, the cache TTL, the sales
+inbox address, or the SMTP settings.
 
 ## Scripts
 
@@ -54,10 +60,9 @@ inbox address.
   products in that category.
 - **Search**: case-insensitive match on product title and description.
 - **Product page**: full details plus an Enquire button.
-- **Enquiry**: validated form; the backend sends the enquiry to the sales
-  inbox and the customer sees a Thank you message. The default
-  `ConsoleEmailProvider` logs the email to the backend console so the reviewer
-  can see it without any email account.
+- **Enquiry**: validated form; the backend sends the enquiry by SMTP to the
+  sales inbox and the customer sees a Thank you message. In development the
+  email arrives in the local Maildev inbox at http://localhost:1080.
 
 ## API
 
@@ -89,9 +94,10 @@ web/               React app (TypeScript, Vite)
   (`server/src/products/types.ts`) and inject it in `server/src/index.ts`.
   `FAKE_STORE_API_BASE` already points the existing implementation at any
   compatible service.
-- **Email provider**: implement `EmailProvider`
-  (`server/src/enquiries/EmailProvider.ts`) - for example SES or SMTP - and
-  inject it in `server/src/index.ts`. No other code changes.
+- **Email provider**: `EmailProvider` (`server/src/enquiries/EmailProvider.ts`)
+  already has an SMTP implementation; production only needs env vars
+  (`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`) pointing at SES or
+  another provider. `EMAIL_PROVIDER=console` falls back to logging.
 - **Look and feel**: all styling lives in `web/src/styles.css`; components are
   plain semantic HTML ready for a design system.
 

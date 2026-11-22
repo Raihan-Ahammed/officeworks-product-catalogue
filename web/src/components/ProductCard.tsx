@@ -5,7 +5,16 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <Link to={`/product/${product.id}`} className="product-card">
       <div className="product-card-image">
-        <img src={product.image} alt={product.title} loading="lazy" />
+        <img
+          src={product.image}
+          alt={product.title}
+          loading="lazy"
+          onError={(e) => {
+            if (!e.currentTarget.src.endsWith('/placeholder.svg')) {
+              e.currentTarget.src = '/placeholder.svg';
+            }
+          }}
+        />
       </div>
       <div className="product-card-body">
         <h3>{product.title}</h3>
