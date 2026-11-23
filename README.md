@@ -1,12 +1,8 @@
-# Product Catalogue (Proof of Concept)
+# Officeworks product catalogue
 
-A small product catalogue for an entrepreneur's MVP: customers browse top rated
-products, browse by category, search, view product details, and send an enquiry
-to the sales inbox. Built as a foundation to grow on, not a throwaway
-prototype: the product data source and the email provider sit behind
-interfaces so they can be swapped without touching the app.
+AI-Native Engineer code challenge submission.
 
-## Tech choices
+**The implementation lives on the `feature/product-catalogue` branch and is under review in [pull request #1](https://github.com/Raihan-Ahammed/officeworks-product-catalogue/pull/1).** This `main` branch only holds the initial scaffold, so run the code from the feature branch as below.
 
 - **Client: React + TypeScript (Vite).** React is the option that matches the
   team's day-to-day stack, and TypeScript catches contract mistakes between
@@ -29,6 +25,9 @@ Prerequisite: Node.js 20 or newer. Nothing else - no accounts, no secrets, no
 paid services.
 
 ```sh
+git clone https://github.com/Raihan-Ahammed/officeworks-product-catalogue.git
+cd officeworks-product-catalogue
+git checkout feature/product-catalogue
 npm install
 npm run dev
 ```
@@ -101,5 +100,4 @@ web/               React app (TypeScript, Vite)
 - **Look and feel**: all styling lives in `web/src/styles.css`; components are
   plain semantic HTML ready for a design system.
 
-See `DECISIONS.md` for assumptions and trade-offs, and `AI_USAGE.md` for how
-AI tools were used.
+Full setup instructions, assumptions and trade-offs, and honest AI-usage/time notes are in `README.md`, `DECISIONS.md`, and `AI_USAGE.md` on the feature branch.
