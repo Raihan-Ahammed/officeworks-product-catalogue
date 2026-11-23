@@ -3,8 +3,8 @@
 ## Tools
 
 - An AI coding assistant (an LLM-based agent that can read and write files and
-  run shell commands), directed by me. I set the approach and constraints,
-  reviewed the output, and own every line in this submission.
+  run shell commands), directed by me. I set the approach and constraints and
+  own every line in this submission.
 
 ## How it was directed
 
@@ -34,16 +34,19 @@ The plan I set up front:
 4. **"Search should also match descriptions, and category pages mirror the
    home page's top-rated-first ordering."**
 
-## Where the AI got something wrong, and how I caught it
+## Where the AI got something wrong, and how it was caught
+
+These issues were caught during the build's own review and test passes,
+before delivery:
 
 - **Broken product images shipped unhandled.** The first UI pass rendered
-  broken-image icons when an image URL failed. I caught this reviewing the
-  running app and added a placeholder fallback in the image components.
+  broken-image icons when an image URL failed. Caught while reviewing the
+  running app; fixed with a placeholder fallback in the image components.
 - **Enquiry delivery was originally log-only.** The first version wrote the
   "email" to the backend console, which does not meet the acceptance
-  criterion that the sales inbox receives an email. I caught this when
-  re-reading the criteria against the submission and replaced it with real
-  SMTP delivery plus a local test inbox.
+  criterion that the sales inbox receives an email. Caught by re-checking the
+  criteria against the submission; replaced with real SMTP delivery plus a
+  local test inbox.
 - **Test isolation bug.** The first frontend test run failed because the test
   setup did not clean up rendered components between tests. Caught by running
   the suite; fixed in the test setup file.
